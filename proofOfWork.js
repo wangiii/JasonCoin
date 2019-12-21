@@ -1,7 +1,7 @@
 const sha256 = require("crypto-js/sha256");
 
-console.log(sha256("jasonvv1").toString());
-console.log(sha256("jasonvv2").toString());
+console.log("jasonvv1 : " + sha256("jasonvv1").toString());
+console.log("jasonvv2 : " + sha256("jasonvv2").toString());
 
 // 对于不同的输入，哪怕只是一个很微小的改动，输出的结果都是很不一样的。
 // 对于同一个输入，输出结果是一样的。

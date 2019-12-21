@@ -21,8 +21,8 @@ class Block {
   getAnswer(difficulty) {
     //开头前n位为0的hash
     let answer = ''
-    for(let i=0; i< difficulty;i++){
-      answer+='0'
+    for(let i = 0; i < difficulty; i++){
+      answer += '0'
     }
     return answer
   }
@@ -31,12 +31,10 @@ class Block {
   mine(difficulty){
     while(true){
       this.hash=this.computeHash()
-      if(this.hash.substring(0,difficulty)!== this.getAnswer(difficulty)){
-        this.nonce++
-        this.hash=this.computeHash()
-      }else{
+      if(this.hash.substring(0, difficulty) == this.getAnswer(difficulty)) {
         break
       }
+      this.nonce++
     }
     console.log('挖矿结束', this.hash)
   }
@@ -74,7 +72,7 @@ class Chain {
   //当前的数据有没有被篡改
   //我们要验证区块的previousHash是否等于previous区块的hash
   validateChain(){
-    if(this.chain.length===1){
+    if(this.chain.length === 1){
       if(this.chain[0].hash !== this.chain[0].computeHash()){
         return false
       }
@@ -82,16 +80,16 @@ class Chain {
     }
     // this.chain[1] 是第二个区块
     // 我们从第二个区块开始 验证
-    // 验证到最后一个区块 this.chain.length -1 
-    for(let i = 1; i<= this.chain.length-1; i++){
+    // 验证到最后一个区块 this.chain.length - 1 
+    for(let i = 1; i <= this.chain.length-1; i++){
       const blockToValidate = this.chain[i]
       //当前的数据有没有被篡改
-      if(blockToValidate.hash!==blockToValidate.computeHash()){
+      if(blockToValidate.hash !== blockToValidate.computeHash()){
         console.log('数据篡改')
         return false
       }
       //我们要验证区块的previousHash是否等于previous区块的hash
-      const previousBlock = this.chain[i-1]
+      const previousBlock = this.chain[i - 1]
       if(blockToValidate.previousHash !== previousBlock.hash){
         console.log('前后区块链接断裂')
         return false
@@ -110,7 +108,7 @@ jasonChain.addBlockToChain(block2)
 // console.log(jasonChain.validateChain())
 
 //尝试篡改这个区块链
-jasonChain.chain[1].data='转账一百个十元'
+jasonChain.chain[1].data = '转账一百个十元'
 jasonChain.chain[1].mine(4)
 console.log(jasonChain)
 console.log(jasonChain.validateChain())
